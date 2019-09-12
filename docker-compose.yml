@@ -1,0 +1,10 @@
+version: '3'
+services:
+  webapp:
+    image: upfeat-devops-app:latest
+    ports:
+      - "3000:3000"
+      - "8080:80"
+    privileged: false
+    volumes:
+      - /database:/app/database

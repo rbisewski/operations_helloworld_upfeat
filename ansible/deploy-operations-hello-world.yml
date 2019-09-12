@@ -1,0 +1,45 @@
+---
+- name: "Deploy <Operations Hello World> to the VM that runs upfeat.ibiscybernetics.com."
+  hosts: upfeat.ibiscybernetics.com
+  remote_user: rbisewski
+
+  tasks:
+
+    - name: "make directory for cloned git repos"
+      file:
+          path: /git
+          state: directory
+      become: yes
+      become_method: sudo
+
+    - name: "make directory for user database"
+      file:
+          path: /database
+          state: directory
+      become: yes
+      become_method: sudo
+
+    - name: "git clone repo"
+      git:
+          repo: git@github.com:rbisewski/operations_helloworld_upfeat.git
+          version: master
+          dest: /git/operations_helloworld_upfeat
+          accept_hostkey: yes
+
+    - name: "tear down the existing docker-compose"
+      command: docker-compose -f /git/operations_helloworld_upfeat/docker-compose.yml down
+
+    - name: "delete the previous docker image"
+      command: docker rmi upfeat-devops-app:latest
+
+    - name: "rebuild docker image"
+      command: docker build -t upfeat-devops-app:latest --build-arg DEPLOYMENT="production" /git/operations_helloworld_upfeat/app
+
+    - name: "docker-compose up -d to redeploy"
+      command: docker-compose -f /git/operations_helloworld_upfeat/docker-compose.yml up -d
+
+    - name: "ensure cron job with hourly backups is installed"
+      cron:
+        name: "hourly_users_database_backup_to_github"
+        special_time: "hourly"
+        job: "bash /git/operations_helloworld_upfeat/ansible/hourly_backups.sh &> /dev/null"
