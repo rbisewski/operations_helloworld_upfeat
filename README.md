@@ -83,7 +83,7 @@ ansible-playbook -K ansible/deploy-operations-hello-world.yml
 
 * In a real production setting, it is not a good idea to store keys in GitHub repos, but for this assignment it is convenient
 
-* Nginx proxy can get stuck at times during refresh
+* When logged in, refreshing the page can sometimes log you out
 
 * Since this as developed quickly, there are likely other glitches or bugs
 

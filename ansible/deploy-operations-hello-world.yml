@@ -30,7 +30,7 @@
       command: docker-compose -f /git/operations_helloworld_upfeat/docker-compose.yml down
 
     - name: "delete the previous docker image"
-      command: docker rmi upfeat-devops-app:latest
+      command: docker rmi -f upfeat-devops-app:latest
 
     - name: "rebuild docker image"
       command: docker build -t upfeat-devops-app:latest --build-arg DEPLOYMENT="production" /git/operations_helloworld_upfeat/app
