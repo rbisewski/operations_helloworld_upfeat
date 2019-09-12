@@ -9,4 +9,5 @@ RUN cd /app/ && yarn
 RUN cd /app/ && yarn build
 RUN rm -rf /usr/share/nginx/html
 RUN ln -s /app/dist /usr/share/nginx/html
+RUN mv /app/nginx.conf /etc/nginx/nginx.conf
 ENTRYPOINT ["/bin/bash","/app/init.sh"]
