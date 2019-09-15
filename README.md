@@ -72,10 +72,20 @@ ansible-playbook -K ansible/deploy-operations-hello-world.yml
 
 * SQLCipher v4+ to encrypt the users database with the latest and strongest possible ciphers
 
+* Nginx configuration files adjusted to 4 of 5 of the official recommendations for PCI-DSS compliant (no WAF, however)
+    * https://www.nginx.com/blog/pci-dss-best-practices-with-nginx-plus/
+
+* Passes all rule tests on the Mozilla Observatory CLI tool
+    * `observatory --rescan --format report upfeat.ibiscybernetics.com`
+
 ### Cavets and limitations (and future ideas)
 
 * Required a small amount of manual work to prepare the Linux distro on my GCP VM
     * In the future could be automated to adjust nginx templates and install certbot and request certs for a given host
+
+* Consider purchase of a WAF from either Nginx Plus or Cloudflare in order to have complete PCI-DSS compliance
+    * Alteratively, use the free and open source ModSecurity
+        * Can be used without compiling via the Apache webserver
 
 * Not entirely kosher with ansible-lint since there are a couple of simplistic `command` tasks that are ran
 
