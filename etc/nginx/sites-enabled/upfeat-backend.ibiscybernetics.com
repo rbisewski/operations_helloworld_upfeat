@@ -9,11 +9,10 @@ server {
 }
 
 server {
-        client_max_body_size 0;
-        listen 443 http2;
+        listen 443 ssl http2;
         server_name upfeat-backend.ibiscybernetics.com;
+        client_max_body_size 0;
 
-        ssl on;
         ssl_certificate /etc/letsencrypt/live/upfeat.ibiscybernetics.com/fullchain.pem;
         ssl_certificate_key /etc/letsencrypt/live/upfeat.ibiscybernetics.com/privkey.pem;
 
