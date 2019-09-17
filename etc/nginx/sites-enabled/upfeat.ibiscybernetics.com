@@ -41,6 +41,12 @@ server {
         add_header Strict-Transport-Security max-age=31536000 always;
         add_header Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://upfeat-backend.ibiscybernetics.com; font-src 'self'; object-src 'none'; media-src 'self'; form-action 'self'; frame-ancestors 'self';" always;
 
+        #
+        # Enable ModSecurity as a WAF for PCI DSS compliance
+        #
+        modsecurity on;
+        modsecurity_rules_file /etc/nginx/modsec/main.conf;
+
         proxy_connect_timeout 7d;
         proxy_read_timeout 7d;
         proxy_send_timeout 7d;
