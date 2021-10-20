@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "Attempting backup on: `date`"
+echo "Attempting backup on: $(date)"
 cd /git/operations_helloworld_upfeat
 git pull
 git config --global user.email "contact@ibiscybernetics.com"
